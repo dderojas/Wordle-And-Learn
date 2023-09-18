@@ -1,10 +1,10 @@
-type Test = {
+type Guess = {
   key: string;
   color: string;
 }
 
 type RowProps = {
-  guess: Test[];
+  guess: Guess[];
   key: number;
   currentGuess: string;
 }
