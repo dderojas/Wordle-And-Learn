@@ -7,9 +7,10 @@ import Modal from './Modal'
 import useWordleGame from '../hooks/useWordleGame'
 
 type WordleProps = {
-  word: string
+  word: string;
+  setWord: (word: string) => void
 }
-const Wordle = ({ word }: WordleProps) => {
+const Wordle = ({ word, setWord}: WordleProps) => {
   const [showModal, setShowModal] = useState(false)
   const [showSideBar, setShowSideBar] = useState(false)
   const { currentGuess, guesses, turn, isCorrect, usedKeys, handleKeyup } = useWordleGame(word)
@@ -35,8 +36,8 @@ const Wordle = ({ word }: WordleProps) => {
     <div>
       <Board guesses={guesses} currentGuess={currentGuess} turn={turn} />
       <Keyboard usedKeys={usedKeys} />
-      {showSideBar && <SideBar word={word} />}
-      {showModal && <Modal isCorrect={isCorrect} turn={turn} word={word} setShowSideBar={setShowSideBar}/>}
+      {showSideBar && <SideBar word={word} setShowSideBar={setShowSideBar}/>}
+      {showModal && <Modal setWord={setWord} isCorrect={isCorrect} turn={turn} word={word} setShowSideBar={setShowSideBar}/>}
     </div>
   )
 }

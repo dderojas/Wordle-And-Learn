@@ -1,7 +1,7 @@
 const keyboardLetters = [
-  {"key": "A"},
-  {"key": "B"},
-  {"key": "C"},
+  {"key": "a"},
+  {"key": "b"},
+  {"key": "c"},
   {"key": "d"},
   {"key": "e"},
   {"key": "f"},
