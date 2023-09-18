@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 
 import { Board } from './Board'
 import { Keyboard } from './Keyboard'
@@ -18,7 +18,7 @@ const Wordle = ({ word }: WordleProps) => {
 
   return (
     <div>
-      <Board guesses={guesses} />
+      <Board guesses={guesses} currentGuess={currentGuess} turn={turn} />
       <Keyboard usedKeys={usedKeys} />
     </div>
   )

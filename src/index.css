@@ -40,6 +40,26 @@ code {
   font-size: 2.5em;
 }
 
+.row > div.green {
+  background: #5ac85a;
+  border-color: #5ac85a;
+  animation: flip 0.5s ease forwards;
+}
+.row > div.grey {
+  background: #a1a1a1;
+  border-color: #a1a1a1;
+  animation: flip 0.6s ease forwards;
+}
+.row > div.yellow {
+  background: #e2cc68;
+  border-color: #e2cc68;
+  animation: flip 0.5s ease forwards;
+}
+
+.row.current > div.filled {
+  animation: bounce 0.2s ease-in-out forwards;
+}
+
 .keyboard {
   max-width: 500px;
   margin: 20px auto;
@@ -52,4 +72,20 @@ code {
   display: inline-block;
   border-radius: 6px;
   line-height: 50px;
+}
+
+.keyboard > div.green {
+  background: #5ac85a;
+  color: #fff;
+  transition: all 0.3s ease-in;
+}
+.keyboard > div.yellow {
+  background: #e2cc68;
+  color: #fff;
+  transition: all 0.3s ease-in;
+}
+.keyboard > div.grey {
+  background: #a1a1a1;
+  color: #fff;
+  transition: all 0.3s ease-in;
 }

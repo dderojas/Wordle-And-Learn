@@ -5,6 +5,10 @@ type FormattedGuessType = {
   color: string;
 }
 
+type PrevUsedKey = {
+  [key: string]: string;
+}
+
 type FormattedGuessArr = FormattedGuessType[]
 
 const useWordle = (solution: string) => {
@@ -17,7 +21,6 @@ const useWordle = (solution: string) => {
 
   const formatGuess = (): FormattedGuessArr => {
     let solutionArray: string[] = solution.split('')
-    console.log(solutionArray, 'solutionarrrrrrr')
     let formattedGuess: FormattedGuessArr = currentGuess.split('').map((letter) => {
       return {key: letter, color: 'grey'}
     })
@@ -39,7 +42,7 @@ const useWordle = (solution: string) => {
         solutionArray[solutionArray.indexOf(letter.key)] = null
       }
     })
-    console.log(formattedGuess, 'formattedugesssssss')
+
     return formattedGuess
   }
 
@@ -59,9 +62,31 @@ const useWordle = (solution: string) => {
       return prevTurn + 1
     })
 
+    setUsedKeys((prevUsedKeys: PrevUsedKey)  => {
+      formattedGuess.forEach(l => {
+        const currentColor = prevUsedKeys[l.key]
+
+        if (l.color === 'green') {
+          prevUsedKeys[l.key] = 'green'
+          return
+        }
+        if (l.color === 'yellow' && currentColor !== 'green') {
+          prevUsedKeys[l.key] = 'yellow'
+          return
+        }
+        if (l.color === 'grey' && currentColor !== ('green' || 'yellow')) {
+          prevUsedKeys[l.key] = 'grey'
+          return
+        }
+      })
+
+      return prevUsedKeys
+    })
+    
     setCurrentGuess('')
   }
 
+  // find out how to type this properly
   const handleKeyup = ({ key }: any) => {
     if (key === 'Enter') {
       if (turn > 5) {

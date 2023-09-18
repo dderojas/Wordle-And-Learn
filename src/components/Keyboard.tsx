@@ -1,10 +1,7 @@
-import { useEffect, useState } from 'react'
-
-
 const keyboardLetters = [
-  {"key": "a"},
-  {"key": "b"},
-  {"key": "c"},
+  {"key": "A"},
+  {"key": "B"},
+  {"key": "C"},
   {"key": "d"},
   {"key": "e"},
   {"key": "f"},
@@ -31,11 +28,10 @@ const keyboardLetters = [
 ]
 
 export const Keyboard = ({ usedKeys }: any) => {
-  const [letters, setLetters] = useState(keyboardLetters)
 
   return (
     <div className="keyboard">
-      {letters && letters.map(letter => {
+      {keyboardLetters.map(letter => {
         const color: string = usedKeys[letter.key]
         return (
           <div key={letter.key} className={color}>{letter.key}</div>
