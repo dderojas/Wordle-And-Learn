@@ -1,24 +1,45 @@
-// @ts-nocheck
-const Modal = ({ isCorrect, word, turn, setShowSideBar, setWord }) => (
+import { useEffect, useState } from "react"
+import axios from "axios"
+
+const Modal = ({ isCorrect, word, turn, setWord, setDropDownValue }: any) => {
+
+  const [definition, setDefinition] = useState('')
+
+  useEffect(() => {
+    (async () => {
+      const { data } = await axios.get(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`);
+      setDefinition(data[0].meanings[0].definitions[0].definition)
+    })()
+  }, [word])
+
+  return (
     <div className="modal">
       {isCorrect && (
         <div>
           <h1>You Won!</h1>
-          <p className="solution">{word}</p>
-          <p>You found the solution in {turn} guesses</p>
-          <button onClick={() => setWord('')}>New Game</button>
-          <button onClick={() => setShowSideBar(true)}>Definition</button>
+          <p className="solution">Answer: {word}</p>
+          <p>Number of Guesses: {turn}</p>
+          <p>Definition: {definition}</p>
+          <button onClick={() => {
+            setWord('')
+            setDropDownValue('')
+          }}>New Game</button>
         </div>
       )}
       {!isCorrect && (
         <div>
           <h1>You Lost!</h1>
-          <p className="solution">{word}</p>
+          <p className="solution">Answer: {word}</p>
           <p>Better luck next time</p>
-          <button onClick={() => setWord('')}>New Game</button>
+          <p>Definition: {definition}</p>
+          <button onClick={() => {
+            setWord('')
+            setDropDownValue('')
+          }}>New Game</button>
         </div>
       )}
     </div>
   )
+}
 
 export default Modal

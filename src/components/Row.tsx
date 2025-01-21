@@ -1,15 +1,31 @@
+import { useEffect, useState } from "react";
+
 type Guess = {
   key: string;
   color: string;
 }
 
 type RowProps = {
-  guess: Guess[];
+  guess?: Guess[];
   key: number;
-  currentGuess: string;
+  currentGuess?: string;
+  rowLength: number;
 }
 
-export const Row = ({ guess, currentGuess }: RowProps) => {
+export const Row = ({ guess, currentGuess, rowLength }: RowProps) => {
+  const [something, setSomething] = useState([])
+
+  useEffect(() => {
+    let i = 0
+    let result = []
+
+    while (i < rowLength) {
+      result.push(<div></div>)
+      i++
+    }
+    //@ts-ignore
+    setSomething([...result])
+  }, [rowLength])
 
   if (guess) {
     return (
@@ -29,7 +45,7 @@ export const Row = ({ guess, currentGuess }: RowProps) => {
         {letters.map((letter, i) => (
           <div key={i} className="filled">{letter}</div>
         ))}
-        {[...Array(5 - letters.length)].map((_,i) => (
+        {[...Array(rowLength - letters.length)].map((_,i) => (
           <div key={i}></div>
         ))}
       </div>
@@ -38,11 +54,7 @@ export const Row = ({ guess, currentGuess }: RowProps) => {
 
   return (
     <div className="row">
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
+      {something}
     </div>
   )
   

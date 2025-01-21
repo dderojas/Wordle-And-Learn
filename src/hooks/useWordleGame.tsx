@@ -1,4 +1,6 @@
+//@ts-nocheck
 import { useState } from 'react'
+import { toast } from 'react-toastify';
 
 type FormattedGuessType = {
   key: string;
@@ -11,7 +13,7 @@ type PrevUsedKey = {
 
 type FormattedGuessArr = FormattedGuessType[]
 
-const useWordle = (solution: string) => {
+const useWordle = (solution, rowLength) => {
   const [turn, setTurn] = useState(0) 
   const [currentGuess, setCurrentGuess] = useState('')
   const [guesses, setGuesses] = useState([...Array(6)])
@@ -86,21 +88,21 @@ const useWordle = (solution: string) => {
     setCurrentGuess('')
   }
 
-  // find out how to type this properly
   const handleKeyup = ({ key }: any) => {
     if (key === 'Enter') {
       if (turn > 5) {
-        console.log('you used all your guesses!')
+        console.log('you used all your guesses!') // just for development purposes
         return
       }
 
-      if (history.includes(currentGuess)) {
-        console.log('you already tried that word.')
-        return
-      }
+      // if (history.includes(currentGuess)) {
+      //   toast('YOU ALREADY USED THAT WORD YOU DUMMY!') // you can use same word twice, delete this
+      //   setCurrentGuess(prev => prev.slice(0))
+      //   return
+      // }
 
-      if (currentGuess.length !== 5) {
-        console.log('word must be 5 chars.')
+      if (currentGuess.length !== rowLength) {
+        console.log(`word must be ${rowLength} chars.`)
         return
       }
       const formatted = formatGuess()
@@ -113,7 +115,7 @@ const useWordle = (solution: string) => {
     }
 
     if (/^[A-Za-z]$/.test(key)) {
-      if (currentGuess.length < 5) {
+      if (currentGuess.length < rowLength) {
         setCurrentGuess(prev => prev + key)
       }
     }
