@@ -7,8 +7,9 @@ const Modal = ({ isCorrect, word, turn, setWord, setDropDownValue }: any) => {
 
   useEffect(() => {
     (async () => {
-      const { data } = await axios.get(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`);
-      setDefinition(data[0].meanings[0].definitions[0].definition)
+        const { data } = await axios.get(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`);
+
+        setDefinition(data[0].meanings[0].definitions[0].definition)
     })()
   }, [word])
 

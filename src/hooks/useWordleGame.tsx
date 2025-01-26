@@ -1,6 +1,7 @@
 //@ts-nocheck
 import { useState } from 'react'
 import { toast } from 'react-toastify';
+import axios from 'axios'
 
 type FormattedGuessType = {
   key: string;
@@ -20,6 +21,7 @@ const useWordle = (solution, rowLength) => {
   const [history, setHistory] = useState<string[]>([])
   const [isCorrect, setIsCorrect] = useState(false)
   const [usedKeys, setUsedKeys] = useState({})
+
 
   const formatGuess = (): FormattedGuessArr => {
     let solutionArray: string[] = solution.split('')
@@ -88,25 +90,26 @@ const useWordle = (solution, rowLength) => {
     setCurrentGuess('')
   }
 
-  const handleKeyup = ({ key }: any) => {
+  const handleKeyup = async ({ key }: any) => {
     if (key === 'Enter') {
-      if (turn > 5) {
-        console.log('you used all your guesses!') // just for development purposes
-        return
+      try {
+        // call to check word validity
+        await axios.get(`https://api.dictionaryapi.dev/api/v2/entries/en/${currentGuess}`);
+        
+        if (turn > 5) {
+          console.log('you used all your guesses!') // just for development purposes
+          return
+        }
+  
+        if (currentGuess.length !== rowLength) {
+          toast(`The word must be ${rowLength} chars long`)
+          return
+        }
+        const formatted = formatGuess()
+        addNewGuess(formatted)
+      } catch(e) {
+        toast(`That's not a real word!`)
       }
-
-      // if (history.includes(currentGuess)) {
-      //   toast('YOU ALREADY USED THAT WORD YOU DUMMY!') // you can use same word twice, delete this
-      //   setCurrentGuess(prev => prev.slice(0))
-      //   return
-      // }
-
-      if (currentGuess.length !== rowLength) {
-        console.log(`word must be ${rowLength} chars.`)
-        return
-      }
-      const formatted = formatGuess()
-      addNewGuess(formatted)
     }
 
     if (key === 'Backspace') {

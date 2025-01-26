@@ -4,7 +4,7 @@ import { Board } from './Board'
 import { Keyboard } from './Keyboard'
 import Modal from './Modal'
 import useWordleGame from '../hooks/useWordleGame'
-import { ToastContainer, toast } from 'react-toastify'
+import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 
 type WordleProps = {

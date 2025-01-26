@@ -7,7 +7,6 @@ const App = () => {
   const [wordLength, setWordLength] = useState('')
   const [dropDownValue, setDropDownValue] = useState('')
 
-// how to have this load on mount and when wordLength changes
   useEffect(() => {
     (async () => {
       if (wordLength) {
