@@ -32,7 +32,8 @@ export const Keyboard = ({ usedKeys }: any) => {
   return (
     <div className="keyboard">
       {keyboardLetters.map(letter => {
-        const color: string = usedKeys[letter.key]
+        const color: string = usedKeys[letter.key.toLowerCase()]
+
         return (
           <div key={letter.key} className={color}>{letter.key}</div>
         )
