@@ -92,6 +92,7 @@ const useWordle = (solution, rowLength) => {
 
   const handleKeyup = async ({ key }: any) => {
     if (key === 'Enter') {
+      console.log(key, 'enter????')
       try {
         // call to check word validity
         await axios.get(`https://api.dictionaryapi.dev/api/v2/entries/en/${currentGuess}`);

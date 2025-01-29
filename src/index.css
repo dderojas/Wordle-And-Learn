@@ -108,3 +108,41 @@ body, html, #root {
   text-transform: uppercase;
   letter-spacing: 1px;
 }
+
+.dropDownMenu {
+  position: relative;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 8px 0;
+  list-style: none;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  min-width: 150px;
+  z-index: 1000;
+}
+
+.dropDownMenu li {
+  padding: 8px 16px;
+  text-decoration: none;
+  color: #333;
+  display: block;
+  background-color: #f0f0f0;
+}
+
+.btn {
+    background-color: #ADCACB;
+    color: black;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn:hover {
+  background-color: #7FA1A2;
+  transform: scale(1.05);
+}

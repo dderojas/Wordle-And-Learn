@@ -36,8 +36,9 @@ const App = () => {
 
   return (
     <div>
+      <h1>Wordle and Learn</h1>
       {!word && 
-            <select value={dropDownValue} onChange={handleDropDown}>
+          <select className="dropDownMenu" value={dropDownValue} onChange={handleDropDown}>
             <option value="">Select Word Length</option>
             <option value="3">3</option>
             <option value="4">4</option>

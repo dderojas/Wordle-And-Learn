@@ -13,7 +13,7 @@ type RowProps = {
 }
 
 export const Row = ({ guess, currentGuess, rowLength }: RowProps) => {
-  const [something, setSomething] = useState([])
+  const [rowArr, setRowLength] = useState([])
 
   useEffect(() => {
     let i = 0
@@ -24,7 +24,7 @@ export const Row = ({ guess, currentGuess, rowLength }: RowProps) => {
       i++
     }
     //@ts-ignore
-    setSomething([...result])
+    setRowLength([...result])
   }, [rowLength])
 
   if (guess) {
@@ -54,7 +54,7 @@ export const Row = ({ guess, currentGuess, rowLength }: RowProps) => {
 
   return (
     <div className="row">
-      {something}
+      {rowArr}
     </div>
   )
   

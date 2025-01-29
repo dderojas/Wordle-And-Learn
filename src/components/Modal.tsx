@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import axios from "axios"
 
-const Modal = ({ isCorrect, word, turn, setWord, setDropDownValue }: any) => {
+const Modal = ({ isCorrect, word, turn, setWord, setDropDownValue, setShowModal }: any) => {
 
   const [definition, setDefinition] = useState('')
 
@@ -14,14 +14,14 @@ const Modal = ({ isCorrect, word, turn, setWord, setDropDownValue }: any) => {
   }, [word])
 
   return (
-    <div className="modal">
+    <div className="modal" onClick={() => setShowModal(false)}>
       {isCorrect && (
         <div>
           <h1>You Won!</h1>
           <p className="solution">Answer: {word}</p>
           <p>Number of Guesses: {turn}</p>
           <p>Definition: {definition}</p>
-          <button onClick={() => {
+          <button className="btn" onClick={() => {
             setWord('')
             setDropDownValue('')
           }}>New Game</button>
@@ -33,7 +33,7 @@ const Modal = ({ isCorrect, word, turn, setWord, setDropDownValue }: any) => {
           <p className="solution">Answer: {word}</p>
           <p>Better luck next time</p>
           <p>Definition: {definition}</p>
-          <button onClick={() => {
+          <button className="btn" onClick={() => {
             setWord('')
             setDropDownValue('')
           }}>New Game</button>

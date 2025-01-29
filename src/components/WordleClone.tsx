@@ -42,10 +42,10 @@ const Wordle = ({ word, setWord, rowLength, setDropDownValue, handleRestart }: W
   return (
     <div>
       <ToastContainer />
-      <button onClick={handleRestart}>Restart</button>
+      <button className='btn' onClick={handleRestart}>Restart</button>
       <Board guesses={guesses} currentGuess={currentGuess} turn={turn} rowLength={rowLength}/>
       <Keyboard usedKeys={usedKeys} />
-      {showModal && <Modal setWord={setWord} isCorrect={isCorrect} turn={turn} word={word} setDropDownValue={setDropDownValue}/>}
+      {showModal && <Modal setWord={setWord} isCorrect={isCorrect} turn={turn} word={word} setDropDownValue={setDropDownValue} setShowModal={setShowModal}/>}
     </div>
   )
 }
