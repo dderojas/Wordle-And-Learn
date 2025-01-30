@@ -14,7 +14,7 @@ type PrevUsedKey = {
 
 type FormattedGuessArr = FormattedGuessType[]
 
-const useWordle = (solution, rowLength) => {
+const useWordle = (solution, rowLength, setShowModal) => {
   const [turn, setTurn] = useState(0) 
   const [currentGuess, setCurrentGuess] = useState('')
   const [guesses, setGuesses] = useState([...Array(6)])
@@ -51,9 +51,6 @@ const useWordle = (solution, rowLength) => {
   }
 
   const addNewGuess = (formattedGuess: FormattedGuessArr) => {
-    if (currentGuess === solution) {
-      setIsCorrect(true)
-    }
     setGuesses(prevGuesses => {
       let newGuesses = [...prevGuesses]
       newGuesses[turn] = formattedGuess
@@ -87,29 +84,37 @@ const useWordle = (solution, rowLength) => {
       return prevUsedKeys
     })
     
+    if (currentGuess === solution) {
+      setIsCorrect(true)
+      setShowModal(true)
+    }
     setCurrentGuess('')
   }
 
   const handleKeyup = async ({ key }: any) => {
     if (key === 'Enter') {
       console.log(key, 'enter????')
-      try {
-        // call to check word validity
-        await axios.get(`https://api.dictionaryapi.dev/api/v2/entries/en/${currentGuess}`);
-        
-        if (turn > 5) {
-          console.log('you used all your guesses!') // just for development purposes
-          return
+      if (isCorrect) {
+        setShowModal(true)
+      } else {
+        try {
+          // call to check word validity
+          await axios.get(`https://api.dictionaryapi.dev/api/v2/entries/en/${currentGuess}`);
+          
+          if (turn > 5) {
+            console.log('you used all your guesses!') // just for development purposes
+            return
+          }
+    
+          if (currentGuess.length !== rowLength) {
+            toast(`The word must be ${rowLength} chars long`)
+            return
+          }
+          const formatted = formatGuess()
+          addNewGuess(formatted)
+        } catch(e) {
+          toast(`That's not a real word!`)
         }
-  
-        if (currentGuess.length !== rowLength) {
-          toast(`The word must be ${rowLength} chars long`)
-          return
-        }
-        const formatted = formatGuess()
-        addNewGuess(formatted)
-      } catch(e) {
-        toast(`That's not a real word!`)
       }
     }
 

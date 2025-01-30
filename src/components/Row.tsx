@@ -32,7 +32,7 @@ export const Row = ({ guess, currentGuess, rowLength }: RowProps) => {
       <div className="row">
         {guess.map((l, i) => {
           return <div key={i} className={l.color}>{l.key}</div>
-  }     )}
+        })}
       </div>
     )
   }

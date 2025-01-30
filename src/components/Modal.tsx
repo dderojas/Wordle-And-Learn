@@ -14,7 +14,9 @@ const Modal = ({ isCorrect, word, turn, setWord, setDropDownValue, setShowModal 
   }, [word])
 
   return (
-    <div className="modal" onClick={() => setShowModal(false)}>
+    <div className="modal" onClick={() => {
+      setShowModal(false) 
+    }}>
       {isCorrect && (
         <div>
           <h1>You Won!</h1>
