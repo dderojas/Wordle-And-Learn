@@ -15,6 +15,7 @@ type PrevUsedKey = {
 type FormattedGuessArr = FormattedGuessType[]
 
 const useWordle = (solution, rowLength, setShowModal) => {
+  // turn reflects how many have passed, not current turn
   const [turn, setTurn] = useState(0) 
   const [currentGuess, setCurrentGuess] = useState('')
   const [guesses, setGuesses] = useState([...Array(6)])
@@ -86,23 +87,30 @@ const useWordle = (solution, rowLength, setShowModal) => {
     
     if (currentGuess === solution) {
       setIsCorrect(true)
-      setShowModal(true)
     }
+
+    // turn here not updated yet, always -1, e.g. turn > 4 === turn > 5
+    if ((currentGuess !== solution) && (turn > 4)) {      
+      setTimeout(() => {
+        setShowModal(true)
+      }, 2000)
+    }
+
     setCurrentGuess('')
   }
 
   const handleKeyup = async ({ key }: any) => {
     if (key === 'Enter') {
-      console.log(key, 'enter????')
-      if (isCorrect) {
+      if (isCorrect || turn > 5) {
         setShowModal(true)
+
       } else {
         try {
           // call to check word validity
           await axios.get(`https://api.dictionaryapi.dev/api/v2/entries/en/${currentGuess}`);
           
           if (turn > 5) {
-            console.log('you used all your guesses!') // just for development purposes
+            console.log('you used all your guesses!') // just for development
             return
           }
     
@@ -113,6 +121,7 @@ const useWordle = (solution, rowLength, setShowModal) => {
           const formatted = formatGuess()
           addNewGuess(formatted)
         } catch(e) {
+          console.log(e, 'Something went wrong')
           toast(`That's not a real word!`)
         }
       }
@@ -123,7 +132,7 @@ const useWordle = (solution, rowLength, setShowModal) => {
       return
     }
 
-    if (/^[A-Za-z]$/.test(key)) {
+    if (/^[A-Za-z]$/.test(key) && !isCorrect) {
       if (currentGuess.length < rowLength) {
         setCurrentGuess(prev => prev + key)
       }
