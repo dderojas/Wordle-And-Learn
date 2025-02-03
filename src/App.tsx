@@ -36,6 +36,7 @@ const App = () => {
 
   return (
     <div>
+      {!dropDownValue && <img src="/learning_image.jpg" alt="Learning"/> }
       <h1>Wordle and Learn</h1>
       {!word && 
           <select className="dropDownMenu" value={dropDownValue} onChange={handleDropDown}>

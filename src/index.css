@@ -147,3 +147,8 @@ body, html, #root {
   background-color: #7FA1A2;
   transform: scale(1.05);
 }
+
+img {
+  height: 180px;
+  width: 270px;
+}

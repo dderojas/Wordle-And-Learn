@@ -19,7 +19,6 @@ const useWordle = (solution, rowLength, setShowModal) => {
   const [turn, setTurn] = useState(0) 
   const [currentGuess, setCurrentGuess] = useState('')
   const [guesses, setGuesses] = useState([...Array(6)])
-  const [history, setHistory] = useState<string[]>([])
   const [isCorrect, setIsCorrect] = useState(false)
   const [usedKeys, setUsedKeys] = useState({})
 
@@ -57,9 +56,7 @@ const useWordle = (solution, rowLength, setShowModal) => {
       newGuesses[turn] = formattedGuess
       return newGuesses
     })
-    setHistory(prevHistory => {
-      return [...prevHistory, currentGuess]
-    })
+
     setTurn(prevTurn => {
       return prevTurn + 1
     })
@@ -87,9 +84,12 @@ const useWordle = (solution, rowLength, setShowModal) => {
     
     if (currentGuess === solution) {
       setIsCorrect(true)
+      setTimeout(() => {
+        setShowModal(true)
+      }, 2000)
     }
-
-    // turn here not updated yet, always -1, e.g. turn > 4 === turn > 5
+    
+    // turn here not updated YET, always -1, e.g. turn > 4 === turn > 5
     if ((currentGuess !== solution) && (turn > 4)) {      
       setTimeout(() => {
         setShowModal(true)
@@ -102,24 +102,20 @@ const useWordle = (solution, rowLength, setShowModal) => {
   const handleKeyup = async ({ key }: any) => {
     if (key === 'Enter') {
       if (isCorrect || turn > 5) {
-        setShowModal(true)
-
+          setShowModal(true)
       } else {
         try {
-          // call to check word validity
+          // check word validity
           await axios.get(`https://api.dictionaryapi.dev/api/v2/entries/en/${currentGuess}`);
           
-          if (turn > 5) {
-            console.log('you used all your guesses!') // just for development
-            return
-          }
-    
           if (currentGuess.length !== rowLength) {
             toast(`The word must be ${rowLength} chars long`)
             return
           }
+
           const formatted = formatGuess()
           addNewGuess(formatted)
+
         } catch(e) {
           console.log(e, 'Something went wrong')
           toast(`That's not a real word!`)
