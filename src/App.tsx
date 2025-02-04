@@ -11,8 +11,7 @@ const App = () => {
     (async () => {
       if (wordLength) {
         const { data } = await axios.get(`https://random-word-api.vercel.app/api?words=1&length=${wordLength}`)
-        // remove when app is done
-        console.log(data, 'results.......')
+
         setWord(data[0])
         setWordLength(data[0].length)
       }
