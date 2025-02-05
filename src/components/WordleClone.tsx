@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-
 import { Board } from './Board'
 import { Keyboard } from './Keyboard'
 import Modal from './Modal'
@@ -12,7 +11,7 @@ type WordleProps = {
   setWord: (word: string) => void;
   setDropDownValue: (word: string) => void;
   handleRestart: () => void;
-  rowLength: string;
+  rowLength: number;
 }
 const Wordle = ({ word, setWord, rowLength, setDropDownValue, handleRestart }: WordleProps) => {
   const [showModal, setShowModal] = useState(false)

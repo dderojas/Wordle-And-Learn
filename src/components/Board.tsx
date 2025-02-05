@@ -1,10 +1,18 @@
-//@ts-nocheck
 import { Row } from './Row'
+import { GuessTypeArr } from './Row'
 
-export const Board = ({ guesses, currentGuess, turn, rowLength }:any) => {
+
+type BoardType = {
+  guesses: GuessTypeArr[];
+  currentGuess: string;
+  turn: number;
+  rowLength: number;
+}
+
+export const Board = ({ guesses, currentGuess, turn, rowLength }: BoardType) => {
   return (
     <div>
-      {guesses.map((g:any, i:any) => {
+      {guesses.map((g, i) => {
         if (turn === i) {
           return <Row key={i} currentGuess={currentGuess} rowLength={rowLength}/>
         }

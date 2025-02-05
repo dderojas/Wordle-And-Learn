@@ -49,7 +49,7 @@ const App = () => {
             <option value="9">9</option>
           </select>
       }
-      {word && <WordleClone word={word} setWord={setWord} rowLength={wordLength} setDropDownValue={setDropDownValue} handleRestart={handleRestart}/>}
+      {word && <WordleClone word={word} setWord={setWord} rowLength={Number(wordLength)} setDropDownValue={setDropDownValue} handleRestart={handleRestart}/>}
     </div>
   );
 }

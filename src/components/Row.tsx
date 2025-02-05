@@ -1,29 +1,31 @@
 import { useEffect, useState } from "react";
 
-type Guess = {
+export type GuessType = {
   key: string;
   color: string;
 }
 
+export type GuessTypeArr = GuessType[]
+
 type RowProps = {
-  guess?: Guess[];
+  guess?: GuessType[];
   key: number;
   currentGuess?: string;
   rowLength: number;
 }
 
 export const Row = ({ guess, currentGuess, rowLength }: RowProps) => {
-  const [rowArr, setRowLength] = useState([])
+  const [rowArr, setRowLength] = useState<JSX.Element[]>([])
 
   useEffect(() => {
-    let i = 0
+    let i:number = 0
     let result = []
 
-    while (i < rowLength) {
+    while (i < (rowLength)) {
       result.push(<div></div>)
       i++
     }
-    //@ts-ignore
+  
     setRowLength([...result])
   }, [rowLength])
 
