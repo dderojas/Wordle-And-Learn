@@ -13,9 +13,10 @@ type WordleProps = {
   handleRestart: () => void;
   rowLength: number;
 }
+
 const Wordle = ({ word, setWord, rowLength, setDropDownValue, handleRestart }: WordleProps) => {
   const [showModal, setShowModal] = useState(false)
-  const { currentGuess, guesses, turn, isCorrect, usedKeys, handleKeyup } = useWordleGame(word, rowLength, setShowModal)
+  const { currentGuess, guesses, turn, isCorrect, usedKeys, handleKeyup } = useWordleGame({ word, rowLength, setShowModal })
 
   useEffect(() => {
     window.addEventListener('keyup', handleKeyup)

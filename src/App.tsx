@@ -21,7 +21,6 @@ const App = () => {
   const handleDropDown = (e: React.FormEvent<HTMLSelectElement>) => {
     e.preventDefault()
     let value: string = (e!.target as HTMLSelectElement)!.value;
-    console.log(value)
 
     setDropDownValue(value)
     setWordLength(value)

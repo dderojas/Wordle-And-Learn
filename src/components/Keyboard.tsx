@@ -1,3 +1,6 @@
+
+import { UsedKeyType } from "../hooks/useWordleGame"
+
 const keyboardLetters = [
   {"key": "A"},
   {"key": "B"},
@@ -27,11 +30,15 @@ const keyboardLetters = [
   {"key": "Z"}
 ]
 
-export const Keyboard = ({ usedKeys }: any) => {
+type KeyboardType = {
+  usedKeys: UsedKeyType
+}
+
+export const Keyboard = ({ usedKeys }: KeyboardType) => {
 
   return (
     <div className="keyboard">
-      {keyboardLetters.map(letter => {
+      {keyboardLetters.map((letter) => {
         const color: string = usedKeys[letter.key.toLowerCase()]
 
         return (

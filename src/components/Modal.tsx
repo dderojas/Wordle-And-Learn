@@ -1,7 +1,16 @@
 import { useEffect, useState } from "react"
 import axios from "axios"
 
-const Modal = ({ isCorrect, word, turn, setWord, setDropDownValue, setShowModal }: any) => {
+type ModalType = {
+  isCorrect: boolean;
+  word: string;
+  turn: number;
+  setWord: (word:string) => void;
+  setDropDownValue: (length:string) => void;
+  setShowModal: (boolean:boolean) => void;
+}
+
+const Modal = ({ isCorrect, word, turn, setWord, setDropDownValue, setShowModal }: ModalType) => {
 
   const [definition, setDefinition] = useState('')
 

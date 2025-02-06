@@ -1,4 +1,3 @@
-//@ts-nocheck
 import { useState } from 'react'
 import { toast } from 'react-toastify';
 import axios from 'axios'
@@ -8,13 +7,20 @@ type FormattedGuessType = {
   color: string;
 }
 
-type PrevUsedKey = {
+// Key is any letter from A-Z
+export type UsedKeyType = {
   [key: string]: string;
 }
 
 type FormattedGuessArr = FormattedGuessType[]
 
-const useWordle = (solution, rowLength, setShowModal) => {
+type WordleHookTypes = {
+  word: string;
+  rowLength: number;
+  setShowModal: (boolean:boolean) => void;
+}
+
+const useWordle = ({ word: solution, rowLength, setShowModal }: WordleHookTypes) => {
   // turn reflects how many have passed, not current turn
   const [turn, setTurn] = useState(0) 
   const [currentGuess, setCurrentGuess] = useState('')
@@ -24,7 +30,7 @@ const useWordle = (solution, rowLength, setShowModal) => {
 
 
   const formatGuess = (): FormattedGuessArr => {
-    let solutionArray: string[] = solution.split('')
+    let solutionArray: (string | null)[] = solution.split('')
     let formattedGuess: FormattedGuessArr = currentGuess.split('').map((letter) => {
       return {key: letter, color: 'grey'}
     })
@@ -33,7 +39,7 @@ const useWordle = (solution, rowLength, setShowModal) => {
     formattedGuess.forEach((letter, i) => {
       if (solution[i] === letter.key) {
         formattedGuess[i].color = 'green'
-        //@ts-ignore
+        
         solutionArray[i] = null
       }
     })
@@ -42,7 +48,7 @@ const useWordle = (solution, rowLength, setShowModal) => {
     formattedGuess.forEach((letter, i) => {
       if (solutionArray.includes(letter.key) && letter.color !== 'green') {
         formattedGuess[i].color = 'yellow'
-        //@ts-ignore
+        
         solutionArray[solutionArray.indexOf(letter.key)] = null
       }
     })
@@ -61,7 +67,7 @@ const useWordle = (solution, rowLength, setShowModal) => {
       return prevTurn + 1
     })
 
-    setUsedKeys((prevUsedKeys: PrevUsedKey)  => {
+    setUsedKeys((prevUsedKeys: UsedKeyType)  => {
       formattedGuess.forEach(l => {
         const currentColor = prevUsedKeys[l.key]
 
@@ -73,7 +79,7 @@ const useWordle = (solution, rowLength, setShowModal) => {
           prevUsedKeys[l.key] = 'yellow'
           return
         }
-        if (l.color === 'grey' && currentColor !== ('green' || 'yellow')) {
+        if (l.color === 'grey' && currentColor !== 'grey') {
           prevUsedKeys[l.key] = 'grey'
           return
         }
@@ -99,7 +105,9 @@ const useWordle = (solution, rowLength, setShowModal) => {
     setCurrentGuess('')
   }
 
-  const handleKeyup = async ({ key }: any) => {
+  const handleKeyup = async (e:KeyboardEvent) => {
+    const key = e.key
+
     if (key === 'Enter') {
       if (isCorrect || turn > 5) {
           setShowModal(true)
