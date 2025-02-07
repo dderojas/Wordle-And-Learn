@@ -31,7 +31,7 @@ const keyboardLetters = [
 ]
 
 type KeyboardType = {
-  usedKeys: UsedKeyType
+  usedKeys: UsedKeyType;
 }
 
 export const Keyboard = ({ usedKeys }: KeyboardType) => {

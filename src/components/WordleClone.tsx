@@ -18,26 +18,26 @@ const Wordle = ({ word, setWord, rowLength, setDropDownValue, handleRestart }: W
   const [showModal, setShowModal] = useState(false)
   const { currentGuess, guesses, turn, isCorrect, usedKeys, handleKeyup } = useWordleGame({ word, rowLength, setShowModal })
 
-  useEffect(() => {
-    window.addEventListener('keyup', handleKeyup)
+  // useEffect(() => {
+  //   window.addEventListener('keyup', handleKeyup)
 
-    return () => window.removeEventListener('keyup', handleKeyup)
+  //   return () => window.removeEventListener('keyup', handleKeyup)
 
-  }, [handleKeyup, isCorrect, turn])
+  // }, [handleKeyup, isCorrect, turn])
 
   return (
     <div>
       <ToastContainer autoClose={1000} />
       <button className='btn' onClick={handleRestart}>New Game</button>
-      <Board guesses={guesses} currentGuess={currentGuess} turn={turn} rowLength={rowLength}/>
+      <Board guesses={guesses} currentGuess={currentGuess} turn={turn} rowLength={rowLength} handleKeyup={handleKeyup}/>
       <Keyboard usedKeys={usedKeys} />
       {showModal && 
         <Modal
-          setWord={setWord} 
-          isCorrect={isCorrect} 
-          turn={turn} 
-          word={word} 
-          setDropDownValue={setDropDownValue} 
+          setWord={setWord}
+          isCorrect={isCorrect}
+          turn={turn}
+          word={word}
+          setDropDownValue={setDropDownValue}
           setShowModal={setShowModal}
         />
       }

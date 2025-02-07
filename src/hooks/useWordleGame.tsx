@@ -105,9 +105,10 @@ const useWordle = ({ word: solution, rowLength, setShowModal }: WordleHookTypes)
     setCurrentGuess('')
   }
 
-  const handleKeyup = async (e:KeyboardEvent) => {
+  const handleKeyup = async (e:React.KeyboardEvent<HTMLDivElement>) => {
+    e.preventDefault()
+    console.log(e, 'eeeeeeeee')
     const key = e.key
-
     if (key === 'Enter') {
       if (isCorrect || turn > 5) {
           setShowModal(true)
