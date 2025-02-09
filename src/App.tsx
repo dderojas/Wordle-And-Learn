@@ -1,11 +1,26 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
-import WordleClone from './components/WordleClone'
+import { Board } from './components/Board'
+import { Keyboard } from './components/Keyboard'
+import Modal from './components/Modal'
+import useWordleGame from './hooks/useWordleGame'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
   const [word, setWord] = useState('')
   const [wordLength, setWordLength] = useState('')
   const [dropDownValue, setDropDownValue] = useState('')
+  const [showModal, setShowModal] = useState(false)
+  let rowLength = Number(wordLength)
+  const { 
+    currentGuess, 
+    guesses, 
+    turn, 
+    isCorrect, 
+    usedKeys, 
+    handleKeyup 
+  } = useWordleGame({ word, rowLength, setShowModal })
 
   useEffect(() => {
     (async () => {
@@ -17,6 +32,13 @@ const App = () => {
       }
     })()
   }, [wordLength])
+
+  useEffect(() => {
+    window.addEventListener('keyup', handleKeyup)
+
+    return () => window.removeEventListener('keyup', handleKeyup)
+
+  }, [handleKeyup, isCorrect, turn])
 
   const handleDropDown = (e: React.FormEvent<HTMLSelectElement>) => {
     e.preventDefault()
@@ -48,7 +70,24 @@ const App = () => {
             <option value="9">9</option>
           </select>
       }
-      {word && <WordleClone word={word} setWord={setWord} rowLength={Number(wordLength)} setDropDownValue={setDropDownValue} handleRestart={handleRestart}/>}
+      { word && 
+          <div>
+            <ToastContainer autoClose={1000} />
+            <button className='btn' onClick={handleRestart}>New Game</button>
+            <Board guesses={guesses} currentGuess={currentGuess} turn={turn} rowLength={rowLength} />
+            <Keyboard usedKeys={usedKeys} />
+            {showModal && 
+              <Modal
+                setWord={setWord}
+                isCorrect={isCorrect}
+                turn={turn}
+                word={word}
+                setDropDownValue={setDropDownValue}
+                setShowModal={setShowModal}
+              />
+            }
+          </div>
+        }
     </div>
   );
 }

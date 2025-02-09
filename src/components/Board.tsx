@@ -7,13 +7,11 @@ type BoardType = {
   currentGuess: string;
   turn: number;
   rowLength: number;
-  handleKeyup: (e:React.KeyboardEvent<HTMLDivElement>) => Promise<void>;
-
 }
 
-export const Board = ({ guesses, currentGuess, turn, rowLength, handleKeyup }: BoardType) => {
+export const Board = ({ guesses, currentGuess, turn, rowLength }: BoardType) => {
   return (
-    <div tabIndex={0} onKeyUp={handleKeyup}>
+    <div>
       {guesses.map((g, i) => {
         if (turn === i) {
           return <Row key={i} currentGuess={currentGuess} rowLength={rowLength}/>

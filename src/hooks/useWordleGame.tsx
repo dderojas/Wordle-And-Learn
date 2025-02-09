@@ -105,22 +105,22 @@ const useWordle = ({ word: solution, rowLength, setShowModal }: WordleHookTypes)
     setCurrentGuess('')
   }
 
-  const handleKeyup = async (e:React.KeyboardEvent<HTMLDivElement>) => {
+  const handleKeyup = async (e:KeyboardEvent) => {
     e.preventDefault()
-    console.log(e, 'eeeeeeeee')
     const key = e.key
+
     if (key === 'Enter') {
       if (isCorrect || turn > 5) {
           setShowModal(true)
+      
+      } else if (currentGuess.length !== rowLength) {
+
+        toast(`The word must be ${rowLength} chars long`)
+
       } else {
         try {
           // check word validity
           await axios.get(`https://api.dictionaryapi.dev/api/v2/entries/en/${currentGuess}`);
-          
-          if (currentGuess.length !== rowLength) {
-            toast(`The word must be ${rowLength} chars long`)
-            return
-          }
 
           const formatted = formatGuess()
           addNewGuess(formatted)
